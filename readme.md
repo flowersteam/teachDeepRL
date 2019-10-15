@@ -111,3 +111,13 @@ To assess whether ALP-GMM is able to scale to parameter spaces of higher dimensi
 <p><img src="graphics/readme_graphics/walker_gates/stump_gmm_demo_compact_19.gif" width="32%" height="32%"/>
 <img src="graphics/readme_graphics/walker_gates/stump_gmm_demo_compact_48.gif" width="32%" height="32%"/>
 <img src="graphics/readme_graphics/walker_gates/stump_gmm_demo_compact_36.gif" width="32%" height="32%"/></p>
+
+In comparison, when using Random curriculum, most runs end-up with bad performances, like this one:
+
+<p><img src="graphics/readme_graphics/walker_gates/demo_quadru_stump_rand_compact_3.gif" width="32%" height="32%"/>
+<img src="graphics/readme_graphics/walker_gates/demo_quadru_stump_rand_compact_8.gif" width="32%" height="32%"/>
+<img src="graphics/readme_graphics/walker_gates/demo_quadru_stump_rand_compact_10.gif" width="32%" height="32%"/></p>
+
+<p><img src="graphics/readme_graphics/walker_gates/demo_quadru_stump_rand_compact_19.gif" width="32%" height="32%"/>
+<img src="graphics/readme_graphics/walker_gates/demo_quadru_stump_rand_compact_48.gif" width="32%" height="32%"/>
+<img src="graphics/readme_graphics/walker_gates/demo_quadru_stump_rand_compact_36.gif" width="32%" height="32%"/></p>
