@@ -196,11 +196,12 @@ def gmm_plot_gif(bk, gifname='test', gifdir='graphics/', ax=None,
     # Create target Directory if don't exist
     tmpdir = 'tmp/'
     tmppath = gifdir + 'tmp/'
+    if not os.path.exists(gifdir):
+        os.mkdir(gifdir)
+        print("Directory ", gifdir, " Created ")
     if not os.path.exists(tmppath):
         os.mkdir(tmppath)
         print("Directory ", tmppath, " Created ")
-    else:
-        print("Directory ", tmppath, " already exists")
     print("Making " + tmppath + gifname + ".gif")
     images = []
     old_ep = 0
@@ -232,14 +233,14 @@ def random_plot_gif(bk, step=250, gifname='test', gifdir='graphics/', ax=None,
     # Create target Directory if don't exist
     tmpdir = 'tmp/'
     tmppath = gifdir + 'tmp/'
+    if not os.path.exists(gifdir):
+        os.mkdir(gifdir)
+        print("Directory ", gifdir, " Created ")
     if not os.path.exists(tmppath):
         os.mkdir(tmppath)
         print("Directory ", tmppath, " Created ")
-    else:
-        print("Directory ", tmppath, " already exists")
     print("Making " + tmppath + gifname + ".gif")
     images = []
-    old_ep = 0
     tasks = np.array(bk['tasks'])
     for i,(c_grids, c_xs, c_ys) in enumerate(zip(bk['comp_grids'], bk['comp_xs'], bk['comp_ys'])):
             plt.figure(figsize=fig_size)
