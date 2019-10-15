@@ -25,7 +25,7 @@ setup(
         'imageio',
         'seaborn==0.8.1',
         'mpi4py',
-        'tensorflow',
+        'tensorflow<=1.9.0',
         'treelib',
         'gizeh',
         'tqdm'
