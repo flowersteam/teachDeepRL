@@ -4,7 +4,7 @@ import time
 from teachers.algos.riac import RIAC
 from teachers.algos.alp_gmm import ALPGMM
 from teachers.algos.covar_gmm import CovarGMM
-from teachers.utils.plot_utils import region_plot_gif, gmm_plot_gif
+from teachers.utils.plot_utils import region_plot_gif, gmm_plot_gif, random_plot_gif
 import matplotlib.pyplot as plt
 import pickle
 import copy
@@ -107,8 +107,8 @@ def test_riac(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbose=Tr
     if gif and nb_dims==2:
         print('Creating gif...')
         region_plot_gif(all_boxes, alps, iterations, task_generator.sampled_tasks,
-                        gifname='riac_'+str(time.time()), ep_len=[1]*nb_episodes, rewards=rewards, gifdir='gifs/')
-        print('Done (see toy_env/gifs/ folder')
+                        gifname='riac_'+str(time.time()), ep_len=[1]*nb_episodes, rewards=rewards, gifdir='toy_env_gifs/')
+        print('Done (see graphics/toy_env_gifs/ folder)')
     return scores
 
 def test_alpgmm(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbose=True, params={}):
@@ -151,8 +151,8 @@ def test_alpgmm(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbose=
 
     if gif and nb_dims==2:
         print('Creating gif...')
-        gmm_plot_gif(bk, gifname='alpgmm_'+str(time.time()), gifdir='gifs/')
-        print('Done (see toy_env/gifs/ folder')
+        gmm_plot_gif(bk, gifname='alpgmm_'+str(time.time()), gifdir='toy_env_gifs/')
+        print('Done (see graphics/toy_env_gifs/ folder)')
     return scores
 
 def test_covar_gmm(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbose=True, params={}):
@@ -194,12 +194,16 @@ def test_covar_gmm(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbo
 
     if gif and nb_dims==2:
         print('Creating gif...')
-        gmm_plot_gif(bk, gifname='covargmm_'+str(time.time()), gifdir='gifs/')
-        print('Done (see toy_env/gifs/ folder')
+        gmm_plot_gif(bk, gifname='covargmm_'+str(time.time()), gifdir='toy_env_gifs/')
+        print('Done (see graphics/toy_env_gifs/ folder)')
     return scores
 
 def test_random(env, nb_episodes, nb_dims=2, gif=False, score_step=1000, verbose=True, params={}):
     scores = []
+    
+    # Init Book-keeping
+    gif_step_size=250  # to match ALP-GMM and Covar-GMM gif style
+    bk = {'comp_grids': [], 'comp_xs': [], 'comp_ys': [], 'tasks':[]}
     for i in range(nb_episodes+1):
         if (i % score_step) == 0:
             scores.append(env.get_score())
@@ -208,23 +212,38 @@ def test_random(env, nb_episodes, nb_dims=2, gif=False, score_step=1000, verbose
                     print(env.cube_competence)
             else:
                 if verbose:
-                    print("it:{}, score:{}".format(i, scores[-1]))
+                    print("it:{}, score:{}".format(i,scores[-1]))
+            
+        # Book-keeping
+        if i > 100 and (i % gif_step_size) == 0 and (gif is True):
+            if nb_dims == 2:
+                bk['comp_grids'].append(env.cube_competence.copy())
+                bk['comp_xs'].append(env.bnds[0].copy())
+                bk['comp_ys'].append(env.bnds[1].copy())
+
         p = np.random.random(nb_dims)
         env.episode(p)
+        
+    if gif and nb_dims==2:
+        bk['tasks'] = env.params
+        print('Creating gif...')
+        random_plot_gif(bk, gifname='random_'+str(time.time()), gifdir='toy_env_gifs/')
+        print('Done (see graphics/toy_env_gifs/ folder)')
     return scores
 
 
 
 if __name__=="__main__":
-    nb_episodes = 50000
+    nb_episodes = 20000
     nb_dims = 2
     nb_cubes = 10
     score_step = 1000
     env = ToyEnv(nb_dims=nb_dims, nb_cubes=nb_cubes)
     all_scores = []
-    colors = ['r','g','blue','black']
+    colors = ['grey','orange','blue','green']
+    labels = ['Random', 'RIAC', 'ALP-GMM', 'Covar-GMM']
     print('Testing Random...')
-    all_scores.append(test_random(env, nb_episodes, nb_dims, score_step=score_step, verbose=True))
+    all_scores.append(test_random(env, nb_episodes, gif=True, nb_dims=nb_dims, score_step=score_step, verbose=True))
     env.reset()
     print('Testing RIAC...')
     all_scores.append(test_riac(env, nb_episodes, gif=True, nb_dims=nb_dims, score_step=score_step, verbose=True))
@@ -239,8 +258,9 @@ if __name__=="__main__":
     # Plot evolution of % of mastered hypercubes
     episodes = np.arange(0, nb_episodes + score_step, score_step) / score_step
     ax = plt.gca()
-    for scores, color in zip(all_scores, colors):
-        ax.plot(episodes, scores, color=color, linewidth=5)
+    for scores, color, label in zip(all_scores, colors, labels):
+        ax.plot(episodes, scores, color=color, label=label, linewidth=5)
+    ax.legend()
     ax.set_xlabel('Episodes (x1000)', fontsize=20)
     ax.set_ylabel('% Mastered cubes', fontsize=20)
     ax.set_xlim(xmin=0, xmax=nb_episodes / score_step)

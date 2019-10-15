@@ -52,7 +52,7 @@ def scatter_plot(data, ax=None, emph_data=None, xlabel='stump height', ylabel='s
     ax.set_xlabel(xlabel, fontsize=20)
     ax.set_ylabel(ylabel, fontsize=20)
 
-def plot_regions(boxes, interests, ax=None, xlabel='stump height', ylabel='spacing', xlim=None, ylim=None, bar=True):
+def plot_regions(boxes, interests, ax=None, xlabel='', ylabel='', xlim=None, ylim=None, bar=True):
     ft_off = 15
     # Create figure and axes
     if ax == None:
@@ -81,18 +81,20 @@ def plot_regions(boxes, interests, ax=None, xlabel='stump height', ylabel='spaci
     ax.set_aspect('equal', 'box')
 
 def region_plot_gif(all_boxes, interests, iterations, goals, gifname='riac', rewards=None, ep_len=None,
-                    gifdir='graphics/', xlim=[0,1], ylim=[0,1], scatter=False, fs=(5,8), plot_step=250):
+                    gifdir='graphics/', xlim=[0,1], ylim=[0,1], scatter=False, fs=(9,6), plot_step=250):
+    gifdir = 'graphics/' + gifdir
     ft_off = 15
     plt.ioff()
     print("Making an exploration GIF: " + gifname)
     # Create target Directory if don't exist
     tmpdir = 'tmp/'
     tmppath = gifdir + 'tmp/'
+    if not os.path.exists(gifdir):
+        os.mkdir(gifdir)
+        print("Directory ", gifdir, " Created ")
     if not os.path.exists(tmppath):
         os.mkdir(tmppath)
         print("Directory ", tmppath, " Created ")
-    else:
-        print("Directory ", tmppath, " already exists")
     filenames = []
     images = []
     steps = []
@@ -110,12 +112,6 @@ def region_plot_gif(all_boxes, interests, iterations, goals, gifname='riac', rew
                     break
                 else:
                     cur_idx = j
-            # # ADD TRAINING CURVE
-            # ax[2].set_ylabel('Train return', fontsize=18)
-            # steps.append(sum(ep_len[0:i]))
-            # mean_rewards.append(np.mean(rewards[i - plot_step:i]))
-            # ax[2].plot(steps, mean_rewards)
-
             plot_regions(all_boxes[cur_idx], interests[cur_idx], ax=ax[0], xlim=xlim, ylim=ylim)
 
             f_name = gifdir+tmpdir+"scatter_{}.png".format(i)
@@ -195,6 +191,7 @@ def plot_gmm(weights, means, covariances, X=None, ax=None, xlim=[0,1], ylim=[0,1
 
 def gmm_plot_gif(bk, gifname='test', gifdir='graphics/', ax=None,
                  xlim=[0,1], ylim=[0,1], fig_size=(9,6), save_imgs=False, title=True, bar=True):
+    gifdir = 'graphics/' + gifdir
     plt.ioff()
     # Create target Directory if don't exist
     tmpdir = 'tmp/'
@@ -223,6 +220,41 @@ def gmm_plot_gif(bk, gifname='test', gifdir='graphics/', ax=None,
             if title:
                 plt.suptitle('Episode {} | nb Gaussians:{}'.format(ep,len(means)), fontsize=20)
             old_ep = ep
+            if save_imgs: plt.savefig(f_name, bbox_inches='tight')
+            images.append(plt_2_rgb(ax))
+            plt.close()
+    imageio.mimsave(gifdir + gifname + '.gif', images, duration=0.4)
+
+def random_plot_gif(bk, step=250, gifname='test', gifdir='graphics/', ax=None,
+                 xlim=[0,1], ylim=[0,1], fig_size=(9,6), save_imgs=False, title=True, bar=True):
+    gifdir = 'graphics/' + gifdir
+    plt.ioff()
+    # Create target Directory if don't exist
+    tmpdir = 'tmp/'
+    tmppath = gifdir + 'tmp/'
+    if not os.path.exists(tmppath):
+        os.mkdir(tmppath)
+        print("Directory ", tmppath, " Created ")
+    else:
+        print("Directory ", tmppath, " already exists")
+    print("Making " + tmppath + gifname + ".gif")
+    images = []
+    old_ep = 0
+    tasks = np.array(bk['tasks'])
+    for i,(c_grids, c_xs, c_ys) in enumerate(zip(bk['comp_grids'], bk['comp_xs'], bk['comp_ys'])):
+            plt.figure(figsize=fig_size)
+            ax = plt.gca()
+            draw_competence_grid(ax, c_grids, c_xs, c_ys)
+            ax.scatter(tasks[i*step:(i+1)*step, 0], tasks[i*step:(i+1)*step, 1], c='blue', s=2, zorder=2)
+
+            ax.set_xlim(left=xlim[0], right=xlim[1])
+            ax.set_ylim(bottom=ylim[0], top=ylim[1])
+            ax.tick_params(axis='both', which='major', labelsize=20)
+            ax.set_aspect('equal', 'box')
+            
+            f_name = gifdir+tmpdir+gifname+"_{}.png".format(i)
+            if title:
+                plt.suptitle('Episode {}'.format(i*step), fontsize=20)
             if save_imgs: plt.savefig(f_name, bbox_inches='tight')
             images.append(plt_2_rgb(ax))
             plt.close()
