@@ -6,6 +6,43 @@
 Teacher algorithms for curriculum learning of Deep RL in continuously parameterized environments
 ==================================
 
+TODO add paper link and how to cite citation 
+
+##### Table of Contents  
+**[Installation](#installation)**<br>
+**[Launch experiments](#launch-experiments)**<br>
+**[Visualizations](#visualizations)**<br>
+
+# Installation
+
+1- Get the repository
+```
+git clone https://github.com/flowersteam/teachDeepRL
+cd teachDeepRL/
+```
+2- Install it, using Conda for example (use Python >= 3.6)
+```
+conda create --name teachDRL python=3.6
+conda activate teachDRL
+pip install -e .
+```
+
+# Launching experiments
+
+## Testing teachers on toy env
+
+Test Random, RIAC, ALP-GMM and CovarGMM teachers on a simple toy env
+```
+cd teachDeepRL/
+python3 toy_env/toy_env.py
+```
+
+## Testing teachers paired with Soft-Actor Critic on Parameterized Bi
+
+
+
+# Visualizations
+
 ## Abstract
 
 We consider here the problem of how a teacher algorithm can enable an unknown Deep Reinforcement Learning (RL) student 

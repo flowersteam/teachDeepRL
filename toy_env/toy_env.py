@@ -105,8 +105,10 @@ def test_riac(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbose=Tr
         rewards.append(reward)
 
     if gif and nb_dims==2:
+        print('Creating gif...')
         region_plot_gif(all_boxes, alps, iterations, task_generator.sampled_tasks,
                         gifname='riac_'+str(time.time()), ep_len=[1]*nb_episodes, rewards=rewards, gifdir='gifs/')
+        print('Done (see toy_env/gifs/ folder')
     return scores
 
 def test_alpgmm(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbose=True, params={}):
@@ -148,7 +150,9 @@ def test_alpgmm(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbose=
         rewards.append(reward)
 
     if gif and nb_dims==2:
+        print('Creating gif...')
         gmm_plot_gif(bk, gifname='alpgmm_'+str(time.time()), gifdir='gifs/')
+        print('Done (see toy_env/gifs/ folder')
     return scores
 
 def test_covar_gmm(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbose=True, params={}):
@@ -189,7 +193,9 @@ def test_covar_gmm(env, nb_episodes, gif=True, nb_dims=2, score_step=1000, verbo
         rewards.append(reward)
 
     if gif and nb_dims==2:
+        print('Creating gif...')
         gmm_plot_gif(bk, gifname='covargmm_'+str(time.time()), gifdir='gifs/')
+        print('Done (see toy_env/gifs/ folder')
     return scores
 
 def test_random(env, nb_episodes, nb_dims=2, gif=False, score_step=1000, verbose=True, params={}):
@@ -217,12 +223,16 @@ if __name__=="__main__":
     env = ToyEnv(nb_dims=nb_dims, nb_cubes=nb_cubes)
     all_scores = []
     colors = ['r','g','blue','black']
+    print('Testing Random...')
     all_scores.append(test_random(env, nb_episodes, nb_dims, score_step=score_step, verbose=True))
     env.reset()
+    print('Testing RIAC...')
     all_scores.append(test_riac(env, nb_episodes, gif=True, nb_dims=nb_dims, score_step=score_step, verbose=True))
     env.reset()
+    print('Testing ALP-GMM...')
     all_scores.append(test_alpgmm(env, nb_episodes, gif=True, nb_dims=nb_dims, score_step=score_step, verbose=True))
     env.reset()
+    print('Testing Covar-GMM...')
     all_scores.append(test_covar_gmm(env, nb_episodes, gif=True, nb_dims=nb_dims, score_step=score_step, verbose=True))
 
 
