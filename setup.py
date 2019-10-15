@@ -22,6 +22,7 @@ setup(
         'psutil',
         'scipy',
         'sklearn',
+        'imageio',
         'seaborn==0.8.1',
         'mpi4py',
         'tensorflow',

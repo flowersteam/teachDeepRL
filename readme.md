@@ -45,23 +45,38 @@ First you can visualize the different walkers morphologies along with the tested
  ```
  python3 test_bipedal_walker_continuous.py
  ```
+Then you can launch teachers (paired with SAC) on Stump Tracks:
+```
+python3 run.py --exp_name test_alpgmm --teacher ALP-GMM --seed 42 --leg_size default --max_stump_h 3.0 --max_obstacle_spacing 6.0
+```
+Available teachers (-- teacher): ALP-GMM, RIAC, Oracle, Random, Covar-GMM
+Available walker morphologies (--leg_size): short, default, quadru
 
+You can also test the quadrupedal walker on Hexagon Tracks:
+```
+python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 42 --leg_size quadru -hexa 
+```
+
+To run multiple seeds, we recommand to use taskset to bind each process to a single cpu thread, like so:
+```
+taskset -c 0 python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 42 --leg_size quadru -hexa &
+taskset -c 1 python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 43 --leg_size quadru -hexa &
+```
 # Visualizations
 
 ## Abstract
 
-We consider here the problem of how a teacher algorithm can enable an unknown Deep Reinforcement Learning (RL) student 
-to become good at a skill over a wide diversity of environments. To do so, we study how teacher algorithms can automate 
-a learning curriculum, whereby it sequentially samples parameters for stochastic procedural generation of environments. 
-Because the teacher does not initially know the capacities of its student, a key challenge for the teacher is to discover
- which environments are easy, difficult or unlearnable, and in what order to propose them to maximize the efficiency of 
- learning over the learnable ones. To achieve this, we leverage a general approach in which this problem is transformed 
- into a surrogate bandit problem where the teacher aims at sampling environments in order to maximize absolute learning 
- progress. We study several algorithms that implement this approach, applying them for the first time to Deep RL, including 
- a new algorithm mapping learning progress with Gaussian mixture models (ALP-GMM). Using parameterized variants of the 
- BipedalWalker environment, we study their efficiency to personalize a learning curriculum for learners of different 
- capacities (due to different bodies), their robustness to the ratio of learnable/unlearnable environments, and their 
- scalability to higher-dimensional non-linear parameter spaces.
+We consider the problem of how a teacher algorithm can enable an unknown Deep Reinforcement Learning (DRL) student to become
+good at a skill over a wide range of diverse environments. To do so, we study how a teacher algorithm can learn to generate 
+a learning curriculum, whereby it sequentially samples parameters controlling a stochastic procedural generation of environments.
+Because it does not initially know the capacities of its student, a key challenge for the teacher is to discover which environments
+are easy, difficult or unlearnable, and in what order to propose them to maximize the efficiency of learning over the learnable ones.
+To achieve this, this problem is transformed into a surrogate continuous bandit problem where the teacher samples environments 
+in order to maximize absolute learning progress of its student. We present a new algorithm modeling absolute learning progress
+with Gaussian mixture models (ALP-GMM). We also adapt existing algorithms and provide a complete study in the context of DRL.
+ Using parameterized variants of the BipedalWalker environment, we study their efficiency to personalize a learning curriculum
+ for different learners (embodiments), their robustness to the ratio of learnable/unlearnable environments, and their scalability
+  to non-linear and high-dimensional parameter spaces.
 
 
 # Additional Visualizations

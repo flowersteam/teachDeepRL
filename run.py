@@ -38,8 +38,8 @@ parser.add_argument('--leg_size', type=str, default="default")  # choose walker 
 
 
 # Selection of parameter space
-# So far 3 choices: "--max_stump_h 3.0 --max_obstacle_spacing 6.0" (aka Stump Tracks) or "-poly" (aka Hexagon Tracks)
-# or "-seq"
+# So far 3 choices: "--max_stump_h 3.0 --max_obstacle_spacing 6.0" (aka Stump Tracks) or "-hexa" (aka Hexagon Tracks)
+# or "-seq" (untested experimental env)
 parser.add_argument('--max_stump_h', type=float, default=None)
 parser.add_argument('--max_stump_w', type=float, default=None)
 parser.add_argument('--max_stump_r', type=float, default=None)
@@ -48,7 +48,7 @@ parser.add_argument('--max_obstacle_spacing', type=float, default=None)
 parser.add_argument('--max_gap_w', type=float, default=None)
 parser.add_argument('--step_h', type=float, default=None)
 parser.add_argument('--step_nb', type=float, default=None)
-parser.add_argument('--poly_shape', '-poly', action='store_true')
+parser.add_argument('--hexa_shape', '-hexa', action='store_true')
 parser.add_argument('--stump_seq', '-seq', action='store_true')
 
 # Teacher-specific arguments:
@@ -93,7 +93,7 @@ if args.max_stump_r is not None:
     param_env_bounds['stump_rot'] = [0, args.max_stump_r]
 if args.max_obstacle_spacing is not None:
     param_env_bounds['obstacle_spacing'] = [0, args.max_obstacle_spacing]
-if args.poly_shape:
+if args.hexa_shape:
     param_env_bounds['poly_shape'] = [0, 4.0, 12]
 if args.stump_seq:
     param_env_bounds['stump_seq'] = [0, 6.0, 10]
