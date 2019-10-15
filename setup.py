@@ -11,7 +11,7 @@ setup(
     py_modules=['spinup', 'teachers', 'toy_env', 'gym_flowers'],
     version="0.1",
     install_requires=[
-        'cloudpickle==0.5.2',
+        'cloudpickle==1.2.0',
         'gym[atari,box2d,classic_control]>=0.10.8',
         'ipython',
         'joblib',
@@ -21,6 +21,7 @@ setup(
         'pytest',
         'psutil',
         'scipy',
+        'sklearn',
         'seaborn==0.8.1',
         'mpi4py',
         'tensorflow',

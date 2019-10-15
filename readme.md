@@ -27,19 +27,24 @@ conda activate teachDRL
 pip install -e .
 ```
 
-# Launching experiments
+## Launching experiments
 
-## Testing teachers on toy env
+#### Testing teachers on toy env
 
 Test Random, RIAC, ALP-GMM and CovarGMM teachers on a simple toy env
 ```
 cd teachDeepRL/
 python3 toy_env/toy_env.py
 ```
+Gifs of the parameter sampling dynamics of teachers will be created in toy_env/gifs/
 
-## Testing teachers paired with Soft-Actor Critic on Parameterized Bi
+#### Testing teachers paired with Soft-Actor Critic on Parameterized Bi
 
-
+First you can visualize the different walkers morphologies along with the tested parametric variations of the environment
+ (Stump Tracks and Hexagon Tracks)
+ ```
+ python3 test_bipedal_walker_continuous.py
+ ```
 
 # Visualizations
 
