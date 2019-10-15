@@ -121,6 +121,13 @@ class TeacherController(object):
         self.test_ep_counter += 1
         if self.test_mode == "fixed_set":
             test_param_dict = self.test_env_list[self.test_ep_counter-1]
+
+            # removing legacy parameters from test_set, don't pay attention
+            legacy = ['tunnel_height', 'gap_width', 'step_height', 'step_number']
+            keys = test_param_dict.keys()
+            for env_param in legacy:
+                if env_param in keys:
+                    del test_param_dict[env_param]
         else:
             raise NotImplementedError
 
