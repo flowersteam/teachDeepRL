@@ -1,5 +1,5 @@
 import gym
-import gym_flowers
+import teachDRL.gym_flowers
 import time
 import numpy as np
 

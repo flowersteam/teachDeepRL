@@ -1,10 +1,10 @@
 import argparse
-from spinup.utils.run_utils import setup_logger_kwargs
-from spinup.algos.sac.sac import sac
-from spinup.algos.sac import core
+from teachDRL.spinup.utils.run_utils import setup_logger_kwargs
+from teachDRL.spinup.algos.sac.sac import sac
+from teachDRL.spinup.algos.sac import core
 import gym
-import gym_flowers
-from teachers.teacher_controller import TeacherController
+import teachDRL.gym_flowers
+from teachDRL.teachers.teacher_controller import TeacherController
 from collections import OrderedDict
 import os
 import numpy as np

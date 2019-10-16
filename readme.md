@@ -11,6 +11,7 @@ TODO add paper link and how to cite citation
 ##### Table of Contents  
 **[Installation](#installation)**<br>
 **[Launching experiments](#launching-experiments)**<br>
+**[Using the Parameterized BW environment](#launching-experiments)**<br>
 **[Visualizations](#visualizations)**<br>
 
 ## Installation
@@ -62,6 +63,29 @@ To run multiple seeds, we recommand to use taskset to bind each process to a sin
 ```
 taskset -c 0 python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 42 --leg_size quadru -hexa &
 taskset -c 1 python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 43 --leg_size quadru -hexa &
+```
+
+## Using the Parameterized BW environment
+In case you want to use our Parameterized BW in your own projects, the following pseudo-code 
+shows how to interact with the environment:
+```python
+import gym
+import teachDRL.gym_flowers
+import numpy as np
+env = gym.make('bipedal-walker-continuous-v0')  # create environment
+env.env.my_init({'leg_size': 'default'})  # set walker type within environment, do it once
+
+for nb_episode in range(10):
+    # now set the parameters for the procedural generation
+    # make sure to do it for each new episode, before reset
+    env.set_environment(stump_height=np.random.uniform(0,3),
+                        obstacle_spacing=np.random.uniform(0,6)) # Stump Tracks
+    #env.set_environment(poly_shape=np.random.uniform(0,4,12))  # Hexagon Tracks
+          
+    env.reset()
+    for i in range(2000):
+        obs, rew, done, _ = env.step(env.env.action_space.sample())
+        env.render()
 ```
 ## Visualizations
 
