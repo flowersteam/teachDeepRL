@@ -9,7 +9,7 @@ How to teach a Deep RL agent to learn to become good at a skill over a wide rang
 we propose to rely on **teacher algorithms** using **Learning Progress** (LP) as a signal to optimize the sequential selection
 of tasks to propose to their DRL Student. To study our proposed teachers, we design two **parameterized BipedalWalker environments**.
 Teachers are then tasked to sample a parameter mapped to a *distribution of tasks* on which a task is sampled 
-and proposed to the student. The teacher then observes the episodic performance of its student and use this information to adapt its sampling distribution. See below for a simple workflow diagram.
+and proposed to the student. The teacher then observes the episodic performance of its student and uses this information to adapt its sampling distribution (see figure below for a simple workflow diagram).
 
 <div style="text-align:center"><img src="teachDRL/graphics/readme_graphics/CTS_framework_pipeline_v2.png"  width="50%" height="50%"/></div>
 
@@ -17,7 +17,7 @@ In this work we present a new algorithm modeling absolute learning progress with
 along with existing LP-based algorithms. Using our BipedalWalker environments, we study their efficiency to personalize
 a learning curriculum for different learners (embodiments), their robustness to the ratio of learnable/unlearnable
 tasks, and their scalability to non-linear and high-dimensional parameter spaces. ALP-GMM, which is conceptually
-simple and has very few crucial hyperparameters, opens-up exciting perspectives for various DRL challenges (domain randomization for Sim2Real transfer, curriculum learning within autonomously discovered task spaces, ...).
+simple and has very few crucial hyperparameters, opens-up exciting perspectives for various curriculum learning challenges within DRL (domain randomization for Sim2Real transfer, curriculum learning within autonomously discovered task spaces, ...).
 
 
 ## Table of Contents  
