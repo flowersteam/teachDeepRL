@@ -19,7 +19,7 @@ a learning curriculum for different learners (embodiments), their robustness to 
 tasks, and their scalability to non-linear and high-dimensional parameter spaces. ALP-GMM, which is conceptually
 simple and has very few crucial hyperparameters, opens-up exciting perspectives for various curriculum learning challenges within DRL (domain randomization for Sim2Real transfer, curriculum learning within autonomously discovered task spaces, ...).
 
-
+Paper: https://arxiv.org/abs/1910.07224
 ## Table of Contents  
 **[Installation](#installation)**<br>
 **[Launching experiments](#launching-experiments)**<br>
