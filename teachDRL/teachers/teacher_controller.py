@@ -1,12 +1,12 @@
 import numpy as np
 import pickle
 import copy
-from teachers.algos.riac import RIAC
-from teachers.algos.alp_gmm import ALPGMM
-from teachers.algos.covar_gmm import CovarGMM
-from teachers.algos.random_teacher import RandomTeacher
-from teachers.algos.oracle_teacher import OracleTeacher
-from teachers.utils.test_utils import get_test_set_name
+from teachDRL.teachers.algos.riac import RIAC
+from teachDRL.teachers.algos.alp_gmm import ALPGMM
+from teachDRL.teachers.algos.covar_gmm import CovarGMM
+from teachDRL.teachers.algos.random_teacher import RandomTeacher
+from teachDRL.teachers.algos.oracle_teacher import OracleTeacher
+from teachDRL.teachers.utils.test_utils import get_test_set_name
 from collections import OrderedDict
 
 def param_vec_to_param_dict(param_env_bounds, param):
