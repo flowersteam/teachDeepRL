@@ -26,6 +26,7 @@ setup(
         'seaborn==0.8.1',
         'mpi4py',
         'tensorflow<=1.9.0',
+        'setuptools<=39.1.0',
         'treelib',
         'gizeh',
         'tqdm'
