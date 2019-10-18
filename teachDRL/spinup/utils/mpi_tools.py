@@ -1,4 +1,4 @@
-from mpi4py import MPI
+#from mpi4py import MPI
 import os, subprocess, sys
 import numpy as np
 
@@ -39,9 +39,11 @@ def mpi_fork(n, bind_to_core=False):
 def msg(m, string=''):
     print(('Message from %d: %s \t '%(MPI.COMM_WORLD.Get_rank(), string))+str(m))
 
+# !!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!!!!! Modified version to avoid requiring mpi4py
 def proc_id():
-    """Get rank of calling process."""
-    return MPI.COMM_WORLD.Get_rank()
+    return 0
+    #"""Get rank of calling process."""
+    #return MPI.COMM_WORLD.Get_rank()
 
 def allreduce(*args, **kwargs):
     return MPI.COMM_WORLD.Allreduce(*args, **kwargs)
