@@ -1,7 +1,7 @@
 from sklearn.mixture import GaussianMixture as GMM
 import numpy as np
 from gym.spaces import Box
-from teachers.utils.dataset import BufferedDataset
+from teachDRL.teachers.utils.dataset import BufferedDataset
 
 
 def proportional_choice(v, eps=0.):

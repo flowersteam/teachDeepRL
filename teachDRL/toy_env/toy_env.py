@@ -1,10 +1,10 @@
 import numpy as np
 import scipy.stats as sp
 import time
-from teachers.algos.riac import RIAC
-from teachers.algos.alp_gmm import ALPGMM
-from teachers.algos.covar_gmm import CovarGMM
-from teachers.utils.plot_utils import region_plot_gif, gmm_plot_gif, random_plot_gif
+from teachDRL.teachers.algos.riac import RIAC
+from teachDRL.teachers.algos.alp_gmm import ALPGMM
+from teachDRL.teachers.algos.covar_gmm import CovarGMM
+from teachDRL.teachers.utils.plot_utils import region_plot_gif, gmm_plot_gif, random_plot_gif
 import matplotlib.pyplot as plt
 import pickle
 import copy
