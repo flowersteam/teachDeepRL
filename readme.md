@@ -5,8 +5,23 @@
 
 Teacher algorithms for curriculum learning of Deep RL in continuously parameterized environments
 ==================================
+How to teach a Deep RL agent to learn to become good at a skill over a wide range of diverse tasks ? To address this problem
+we propose to rely on **teacher algorithms** using **Learning Progress** (LP) as a signal to optimize the sequential selection
+of tasks to propose to their DRL Student. To study our proposed teachers, we design two **parameterized BipedalWalker environments**.
+Teachers are then tasked to sample a parameter, which is mapped to a *distribution of tasks* on which a task is sampled 
+and proposed to the student (which is closer to real-world scenarios where stochasticity is an issue). The teacher then
+ observes the episodic performance of its student and use this information to adapt its sampling distribution.
 
-*link to paper comming soon* 
+<p><img src="teachDRL/graphics/readme_graphics/CTS_framework_pipeline_v2.png" width="32%" height="32%" /></p>
+
+In this work we present a new algorithm modeling absolute learning progress with Gaussian mixture models (ALP-GMM)
+along with existing LP-based algorithms. Using our BipedalWalker environment, we study their efficiency to personalize
+a learning curriculum for different learners (embodiments), their robustness to the ratio of learnable/unlearnable
+tasks, and their scalability to non-linear and high-dimensional parameter spaces. ALP-GMM, which is conceptually
+simple and has very few crucial hyperparameters, opens-up exciting perspectives for various DRL challenges such as
+domain randomization for Sim2Real transfer, curriculum learning within autonomously discovered task spaces
+impossible to acquire TODO finish
+
 
 ##### Table of Contents  
 **[Installation](#installation)**<br>
