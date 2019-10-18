@@ -2,10 +2,10 @@ import numpy as np
 import tensorflow as tf
 import gym
 import time
-from spinup.algos.td3 import core
-from spinup.algos.td3.td3 import td3 as true_td3
-from spinup.algos.td3.core import get_vars
-from spinup.utils.logx import EpochLogger
+from teachDRL.spinup.algos.td3 import core
+from teachDRL.spinup.algos.td3.td3 import td3 as true_td3
+from teachDRL.spinup.algos.td3.core import get_vars
+from teachDRL.spinup.utils.logx import EpochLogger
 
 """
 
@@ -366,7 +366,7 @@ if __name__ == '__main__':
     parser.add_argument('--use_soln', action='store_true')
     args = parser.parse_args()
 
-    from spinup.utils.run_utils import setup_logger_kwargs
+    from teachDRL.spinup.utils.run_utils import setup_logger_kwargs
     logger_kwargs = setup_logger_kwargs(args.exp_name + '-' + args.env.lower(), args.seed)
 
     all_kwargs = dict(

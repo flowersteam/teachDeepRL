@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import time
-from spinup.utils.logx import EpochLogger
+from teachDRL.spinup.utils.logx import EpochLogger
 
 
 def mlp(x, hidden_sizes=(32,), activation=tf.tanh, output_activation=None):

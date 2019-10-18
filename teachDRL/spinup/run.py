@@ -1,6 +1,6 @@
 import spinup
-from spinup.utils.run_utils import ExperimentGrid
-from spinup.utils.serialization_utils import convert_json
+from teachDRL.spinup.utils.run_utils import ExperimentGrid
+from teachDRL.spinup.utils.serialization_utils import convert_json
 import argparse
 import gym
 import json

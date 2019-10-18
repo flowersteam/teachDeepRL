@@ -3,9 +3,9 @@ import tensorflow as tf
 import gym
 import time
 import spinup.algos.trpo.core as core
-from spinup.utils.logx import EpochLogger
-from spinup.utils.mpi_tf import MpiAdamOptimizer, sync_all_params
-from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
+from teachDRL.spinup.utils.logx import EpochLogger
+from teachDRL.spinup.utils.mpi_tf import MpiAdamOptimizer, sync_all_params
+from teachDRL.spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
 
 
 EPS = 1e-8
@@ -393,7 +393,7 @@ if __name__ == '__main__':
 
     mpi_fork(args.cpu)  # run parallel code with mpi
 
-    from spinup.utils.run_utils import setup_logger_kwargs
+    from teachDRL.spinup.utils.run_utils import setup_logger_kwargs
     logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
 
     trpo(lambda : gym.make(args.env), actor_critic=core.mlp_actor_critic,

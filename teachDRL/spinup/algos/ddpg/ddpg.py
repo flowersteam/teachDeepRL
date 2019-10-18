@@ -2,9 +2,9 @@ import numpy as np
 import tensorflow as tf
 import gym
 import time
-from spinup.algos.ddpg import core
-from spinup.algos.ddpg.core import get_vars
-from spinup.utils.logx import EpochLogger
+from teachDRL.spinup.algos.ddpg import core
+from teachDRL.spinup.algos.ddpg.core import get_vars
+from teachDRL.spinup.utils.logx import EpochLogger
 
 
 class ReplayBuffer:
@@ -288,7 +288,7 @@ if __name__ == '__main__':
     parser.add_argument('--exp_name', type=str, default='ddpg')
     args = parser.parse_args()
 
-    from spinup.utils.run_utils import setup_logger_kwargs
+    from teachDRL.spinup.utils.run_utils import setup_logger_kwargs
     logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
 
     ddpg(lambda : gym.make(args.env), actor_critic=core.mlp_actor_critic,

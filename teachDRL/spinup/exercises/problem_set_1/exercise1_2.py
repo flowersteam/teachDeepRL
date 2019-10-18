@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from spinup.exercises.problem_set_1 import exercise1_1
+from teachDRL.spinup.exercises.problem_set_1 import exercise1_1
 
 """
 
@@ -91,8 +91,8 @@ if __name__ == '__main__':
     Run this file to verify your solution.
     """
 
-    from spinup import ppo
-    from spinup.exercises.common import print_result
+    from teachDRL.spinup.import ppo
+    from teachDRL.spinup.exercises.common import print_result
     import gym
     import os
     import pandas as pd

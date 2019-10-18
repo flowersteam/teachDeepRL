@@ -2,9 +2,9 @@ import numpy as np
 import tensorflow as tf
 import gym
 import time
-from spinup.algos.td3 import core
-from spinup.algos.td3.core import get_vars
-from spinup.utils.logx import EpochLogger
+from teachDRL.spinup.algos.td3 import core
+from teachDRL.spinup.algos.td3.core import get_vars
+from teachDRL.spinup.utils.logx import EpochLogger
 
 
 class ReplayBuffer:
@@ -316,7 +316,7 @@ if __name__ == '__main__':
     parser.add_argument('--exp_name', type=str, default='td3')
     args = parser.parse_args()
 
-    from spinup.utils.run_utils import setup_logger_kwargs
+    from teachDRL.spinup.utils.run_utils import setup_logger_kwargs
     logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
     
     td3(lambda : gym.make(args.env), actor_critic=core.mlp_actor_critic,

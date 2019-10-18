@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 from mpi4py import MPI
-from spinup.utils.mpi_tools import broadcast
+from teachDRL.spinup.utils.mpi_tools import broadcast
 
 
 def flat_concat(xs):

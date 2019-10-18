@@ -2,11 +2,11 @@ import numpy as np
 import tensorflow as tf
 import gym
 import time
-from spinup.algos.td3 import core
-from spinup.algos.td3.td3 import ReplayBuffer
-from spinup.algos.td3.core import get_vars
-from spinup.utils.logx import EpochLogger
-from spinup.utils.run_utils import ExperimentGrid
+from teachDRL.spinup.algos.td3 import core
+from teachDRL.spinup.algos.td3.td3 import ReplayBuffer
+from teachDRL.spinup.algos.td3.core import get_vars
+from teachDRL.spinup.utils.logx import EpochLogger
+from teachDRL.spinup.utils.run_utils import ExperimentGrid
 
 
 """
