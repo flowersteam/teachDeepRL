@@ -1,9 +1,9 @@
 import numpy as np
 import tensorflow as tf
 import time
-from spinup.algos.sac import core
-from spinup.algos.sac.core import get_vars
-from spinup.utils.logx import EpochLogger
+from teachDRL.spinup.algos.sac import core
+from teachDRL.spinup.algos.sac.core import get_vars
+from teachDRL.spinup.utils.logx import EpochLogger
 
 class ReplayBuffer:
     """
