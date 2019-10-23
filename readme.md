@@ -20,10 +20,19 @@ tasks, and their scalability to non-linear and high-dimensional parameter spaces
 simple and has very few crucial hyperparameters, opens-up exciting perspectives for various curriculum learning challenges within DRL (domain randomization for Sim2Real transfer, curriculum learning within autonomously discovered task spaces, ...).
 
 Paper: https://arxiv.org/abs/1910.07224
+
+This github repository provides implementations for the following teacher algorithms:
+* ALP-GMM, our proposed teacher algorithm
+* Robust Intelligent Adaptive Curiosity (RIAC), from [Baranes and Oudeyer, R-IAC: robust intrinsically motivated exploration and active learning.
+](https://ieeexplore.ieee.org/document/5342516)
+* Covar-GMM, from [Moulin-Frier et al., Self-organization of early vocal development in infants and machines: The role of intrinsic motivation.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3893575/)
+
+
 ## Table of Contents  
 **[Installation](#installation)**<br>
-**[Launching experiments](#launching-experiments)**<br>
-**[Using the Parameterized BW environment](#launching-experiments)**<br>
+**[Testing teachers](#Testing teachers)**<br>
+**[Using the Parameterized BW environment](#Using the Parameterized BW environment)**<br>
+**[Launching experiments on Parameterized BW environment](#Launching experiments on Parameterized BW environment)**<br>
 **[Visualizations](#visualizations)**<br>
 
 ## Installation
@@ -40,42 +49,14 @@ conda activate teachDRL
 pip install -e .
 ```
 
-## Launching experiments
-
-### Testing teachers on toy env
+## Testing teachers
 
 Test Random, RIAC, ALP-GMM and CovarGMM teachers on a simple toy env
 ```
-cd teachDeepRL/
+cd teachDRL/
 python3 toy_env/toy_env.py
 ```
-Gifs of the parameter sampling dynamics of teachers will be created in toy_env/gifs/
-
-### Testing teachers + Soft-Actor Critic on Parameterized Bipedal Walker
-
-First you can visualize the different walkers morphologies along with the tested parametric variations of the environment
- (Stump Tracks and Hexagon Tracks)
- ```
- python3 test_bipedal_walker_continuous.py
- ```
-Then you can launch a Teacher-Student run in Stump Tracks:
-```
-python3 run.py --exp_name test_alpgmm --teacher ALP-GMM --seed 42 --leg_size default --max_stump_h 3.0 --max_obstacle_spacing 6.0
-```
-Available teachers (-- teacher): ALP-GMM, RIAC, Oracle, Random, Covar-GMM
-
-Available walker morphologies (--leg_size): short, default, quadru
-
-You can also test the quadrupedal walker on Hexagon Tracks:
-```
-python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 42 --leg_size quadru -hexa 
-```
-
-To run multiple seeds, we recommand to use taskset to bind each process to a single cpu thread, like so:
-```
-taskset -c 0 python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 42 --leg_size quadru -hexa &
-taskset -c 1 python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 43 --leg_size quadru -hexa &
-```
+Gifs of the parameter sampling dynamics of teachers will be created in graphics/toy_env_gifs/
 
 ## Using the Parameterized BW environment
 In case you want to use our Parameterized BW in your own projects, the following pseudo-code 
@@ -99,6 +80,35 @@ for nb_episode in range(10):
         obs, rew, done, _ = env.step(env.env.action_space.sample())
         env.render()
 ```
+We implemented two additional walker morphologies, which can be visualized along with the parametric variations
+of the environment (Stump Tracks and Hexagon Tracks):
+ ```
+ python3 test_bipedal_walker_continuous.py
+ ```
+## Launching experiments on Parameterized BW environment
+
+In the Parameterized BW environment, we use Soft Actor Critic (OpenAI spinningup implementation) as our Deep RL student.
+
+
+Then you can launch a Teacher-Student run in Stump Tracks:
+```
+python3 run.py --exp_name test_alpgmm --teacher ALP-GMM --seed 42 --leg_size default --max_stump_h 3.0 --max_obstacle_spacing 6.0
+```
+Available teachers (-- teacher): ALP-GMM, RIAC, Oracle, Random, Covar-GMM
+
+Available walker morphologies (--leg_size): short, default, quadru
+
+You can also test the quadrupedal walker on Hexagon Tracks:
+```
+python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 42 --leg_size quadru -hexa 
+```
+
+To run multiple seeds, we recommand to use taskset to bind each process to a single cpu thread, like so:
+```
+taskset -c 0 python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 42 --leg_size quadru -hexa &
+taskset -c 1 python3 run.py --exp_name test_alpgmm_hexa --teacher ALP-GMM --seed 43 --leg_size quadru -hexa &
+```
+
 ## Visualizations
 
 ### Stump Tracks
