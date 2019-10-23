@@ -23,7 +23,7 @@ parser.add_argument('--epochs', type=int, default=100)
 parser.add_argument('--gpu_id', type=int, default=-1)  # default is no GPU
 parser.add_argument('--ent_coef', type=float, default=0.005)
 parser.add_argument('--max_ep_len', type=int, default=2000)
-parser.add_argument('--steps_per_ep', type=int, default=200000)
+parser.add_argument('--steps_per_ep', type=int, default=200000)  # nb of env steps per epochs (stay above max_ep_len)
 parser.add_argument('--buf_size', type=int, default=2000000)
 parser.add_argument('--nb_test_episodes', type=int, default=50)
 parser.add_argument('--lr', type=float, default=1e-3)
