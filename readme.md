@@ -30,9 +30,9 @@ This github repository provides implementations for the following teacher algori
 
 ## Table of Contents  
 **[Installation](#installation)**<br>
-**[Testing teachers](#Testing teachers)**<br>
-**[Using the Parameterized BW environment](#Using the Parameterized BW environment)**<br>
-**[Launching experiments on Parameterized BW environment](#Launching experiments on Parameterized BW environment)**<br>
+**[Testing teachers](#testing teachers)**<br>
+**[Using the Parameterized BW environment](#using the parameterized bw environment)**<br>
+**[Launching experiments on Parameterized BW environment](#launching experiments on parameterized bw environment)**<br>
 **[Visualizations](#visualizations)**<br>
 
 ## Installation
