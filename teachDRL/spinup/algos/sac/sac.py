@@ -296,10 +296,9 @@ def sac(env_fn, actor_critic=core.mlp_actor_critic, ac_kwargs=dict(), seed=0,
                              d_ph: batch['done'],
                             }
                 outs = sess.run(step_ops, feed_dict)
-                logger.store(LossPi=outs[0], LossQ1=outs[1], LossQ2=outs[2],
-                             LossV=outs[3], Q1Vals=outs[4], Q2Vals=outs[5],
-                             VVals=outs[6], LogPi=outs[7])
-
+                # logger.store(LossPi=outs[0], LossQ1=outs[1], LossQ2=outs[2],
+                #              LossV=outs[3], Q1Vals=outs[4], Q2Vals=outs[5],
+                #              VVals=outs[6], LogPi=outs[7])
             logger.store(EpRet=ep_ret, EpLen=ep_len)
             if Teacher:
                 Teacher.record_train_episode(ep_ret, ep_len)

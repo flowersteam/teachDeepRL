@@ -4,6 +4,9 @@ Some simple logging functionality, inspired by rllab's logging.
 
 Logs to a tab-separated-values file (path/to/output_directory/progress.txt)
 
+
+WARNING: This logger was modified to avoid depending on MPI4PY (by Rémy Portelas)
+
 """
 import json
 import joblib
