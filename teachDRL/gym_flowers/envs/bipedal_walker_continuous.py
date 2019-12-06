@@ -154,7 +154,7 @@ class BipedalWalkerContinuous(gym.Env, EzPickle):
             self.LEG_H = 17 / self.SCALE
         elif leg_size == "quadru":  # quadrupedal walker has 2 pairs of legs and bigger body
 
-            MOTORS_TORQUE = 300 #400 # increase motorself. torque for big boy
+            self.MOTORS_TORQUE = 300 #400 # increase motorself. torque for big boy
             self.torque_penalty /= 8 #20 # reduce torque penalty
             self.LEG_W = 10 / self.SCALE
             self.LEG_H = 51 / self.SCALE
