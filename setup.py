@@ -24,7 +24,7 @@ setup(
         'sklearn',
         'imageio',
         'seaborn==0.8.1',
-        'tensorflow<=1.15.0',
+        'tensorflow<=1.16.0',
         'setuptools',
         'treelib',
         'gizeh',
