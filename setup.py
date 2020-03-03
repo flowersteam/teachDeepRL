@@ -7,8 +7,9 @@ assert sys.version_info.major == 3 and sys.version_info.minor >= 6, \
     + "Please install it before proceeding."
 
 setup(
-    name='teachDRL',
-    packages=find_packages(),
+    name='teachdrl',
+    package_dir={'': 'teachDRL'},
+    packages=find_packages(where='teachDRL'),
     version="0.1",
     install_requires=[
         'cloudpickle==1.2.0',

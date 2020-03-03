@@ -3,7 +3,7 @@ import joblib
 import os
 import os.path as osp
 import tensorflow as tf
-from teachDRL.spinup.import EpochLogger
+from teachDRL.spinup import EpochLogger
 from teachDRL.spinup.utils.logx import restore_tf_graph
 
 def load_policy(fpath, itr='last', deterministic=False):
@@ -86,3 +86,4 @@ if __name__ == '__main__':
                                   args.itr if args.itr >=0 else 'last',
                                   args.deterministic)
     run_policy(env, get_action, args.len, args.episodes, not(args.norender))
+
