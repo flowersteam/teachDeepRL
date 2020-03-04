@@ -7,7 +7,7 @@ assert sys.version_info.major == 3 and sys.version_info.minor >= 6, \
     + "Please install it before proceeding."
 
 setup(
-    name='teachdrl',
+    name='teachDRL',
     
     packages=find_packages(),
     version="0.1",
