@@ -143,6 +143,8 @@ class BipedalWalkerContinuous(gym.Env, EzPickle):
         self.observation_space = spaces.Box(-high, high, dtype=np.float32)
         self.torque_penalty = 0.00035
 
+        self.set_environment()
+
     # Use this init to initialize the environment configurations
     # So far you can choose between using a 'short', 'default' and quadrupedal ('quadru') walker
     def my_init(self, params):
