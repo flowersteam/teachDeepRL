@@ -135,8 +135,8 @@ class ALPGMM():
                 self.bk['tasks_alps'] = self.tasks_alps
                 self.bk['episodes'].append(len(self.tasks))
 
-    def sample_task(self):
-        if (len(self.tasks) < self.nb_random) or (np.random.random() < self.random_task_ratio):
+    def sample_task(self, force_uniform: bool = False):
+        if force_uniform or (len(self.tasks) < self.nb_random) or (np.random.random() < self.random_task_ratio):
             # Random task sampling
             new_task = self.random_task_generator.sample()
         else:
