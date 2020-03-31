@@ -2,7 +2,9 @@ from sklearn.mixture import GaussianMixture as GMM
 import numpy as np
 from gym.spaces import Box
 from teachDRL.teachers.utils.dataset import BufferedDataset
+import logging
 
+logger = logging.getLogger(__name__)
 
 def proportional_choice(v, eps=0.):
     if np.sum(v) == 0 or np.random.rand() < eps:
@@ -108,25 +110,30 @@ class ALPGMM():
                 cur_tasks_alps = np.array(self.tasks_alps[-self.fit_rate:])
 
                 # 2 - Fit batch of GMMs with varying number of Gaussians
-                self.potential_gmms = [g.fit(cur_tasks_alps) for g in self.potential_gmms]
+                self.fit_gmms = []
+                for g in self.potential_gmms:
+                    try:
+                        g.fit(cur_tasks_alps)
+                        self.fit_gmms.append(g)
+                    except FloatingPointError:
+                        logger.warning(f"Failed to fit GMM with {g} gaussians.")
 
                 # 3 - Compute fitness and keep best GMM
-                fitnesses = []
                 if self.gmm_fitness_fun == 'bic':  # Bayesian Information Criterion
-                    fitnesses = [m.bic(cur_tasks_alps) for m in self.potential_gmms]
+                    fitnesses = [m.bic(cur_tasks_alps) for m in self.fit_gmms]
                 elif self.gmm_fitness_fun == 'aic':  # Akaike Information Criterion
-                    fitnesses = [m.aic(cur_tasks_alps) for m in self.potential_gmms]
+                    fitnesses = [m.aic(cur_tasks_alps) for m in self.fit_gmms]
                 elif self.gmm_fitness_fun == 'aicc':  # Modified AIC
                     n = self.fit_rate
                     fitnesses = []
-                    for l, m in enumerate(self.potential_gmms):
+                    for l, m in enumerate(self.fit_gmms):
                         k = self.get_nb_gmm_params(m)
                         penalty = (2*k*(k+1)) / (n-k-1)
                         fitnesses.append(m.aic(cur_tasks_alps) + penalty)
                 else:
                     raise NotImplementedError
                     exit(1)
-                self.gmm = self.potential_gmms[np.argmin(fitnesses)]
+                self.gmm = self.fit_gmms[np.argmin(fitnesses)]
 
                 # book-keeping
                 self.bk['weights'].append(self.gmm.weights_.copy())
@@ -135,8 +142,8 @@ class ALPGMM():
                 self.bk['tasks_alps'] = self.tasks_alps
                 self.bk['episodes'].append(len(self.tasks))
 
-    def sample_task(self):
-        if (len(self.tasks) < self.nb_random) or (np.random.random() < self.random_task_ratio):
+    def sample_task(self, force_uniform: bool = False):
+        if force_uniform or (len(self.tasks) < self.nb_random) or (np.random.random() < self.random_task_ratio):
             # Random task sampling
             new_task = self.random_task_generator.sample()
         else:
