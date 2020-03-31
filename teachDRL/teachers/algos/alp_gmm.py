@@ -110,30 +110,28 @@ class ALPGMM():
                 cur_tasks_alps = np.array(self.tasks_alps[-self.fit_rate:])
 
                 # 2 - Fit batch of GMMs with varying number of Gaussians
-                self.fit_gmms = []
-                for g in self.potential_gmms:
-                    try:
-                        g.fit(cur_tasks_alps)
-                        self.fit_gmms.append(g)
-                    except FloatingPointError:
-                        logger.warning(f"Failed to fit GMM with {g} gaussians.")
+                with np.errstate(under='ignore'):
+                    # ignore underflow and continute GMM fit for all number of components
+                    self.potential_gmms = [g.fit(cur_tasks_alps) for g in self.potential_gmms]
 
-                # 3 - Compute fitness and keep best GMM
-                if self.gmm_fitness_fun == 'bic':  # Bayesian Information Criterion
-                    fitnesses = [m.bic(cur_tasks_alps) for m in self.fit_gmms]
-                elif self.gmm_fitness_fun == 'aic':  # Akaike Information Criterion
-                    fitnesses = [m.aic(cur_tasks_alps) for m in self.fit_gmms]
-                elif self.gmm_fitness_fun == 'aicc':  # Modified AIC
-                    n = self.fit_rate
+                    # 3 - Compute fitness and keep best GMM
                     fitnesses = []
-                    for l, m in enumerate(self.fit_gmms):
-                        k = self.get_nb_gmm_params(m)
-                        penalty = (2*k*(k+1)) / (n-k-1)
-                        fitnesses.append(m.aic(cur_tasks_alps) + penalty)
-                else:
-                    raise NotImplementedError
-                    exit(1)
-                self.gmm = self.fit_gmms[np.argmin(fitnesses)]
+                    if self.gmm_fitness_fun == 'bic':  # Bayesian Information Criterion
+                        fitnesses = [m.bic(cur_tasks_alps) for m in self.potential_gmms]
+                    elif self.gmm_fitness_fun == 'aic':  # Akaike Information Criterion
+                        fitnesses = [m.aic(cur_tasks_alps) for m in self.potential_gmms]
+                    elif self.gmm_fitness_fun == 'aicc':  # Modified AIC
+                        n = self.fit_rate
+                        fitnesses = []
+                        for l, m in enumerate(self.potential_gmms):
+                            k = self.get_nb_gmm_params(m)
+                            penalty = (2*k*(k+1)) / (n-k-1)
+                            fitnesses.append(m.aic(cur_tasks_alps) + penalty)
+                    else:
+                        raise NotImplementedError
+                        exit(1)
+
+                self.gmm = self.potential_gmms[np.argmin(fitnesses)]
 
                 # book-keeping
                 self.bk['weights'].append(self.gmm.weights_.copy())
