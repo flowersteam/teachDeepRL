@@ -104,6 +104,9 @@ class ALPGMM():
         # Concatenate task vector with ALP dimension
         self.tasks_alps.append(np.array(task.tolist() + [self.alps[-1]]))
 
+        self.fit()
+
+    def fit(self, book_keeping=False):
         if len(self.tasks) >= self.nb_random:  # If initial bootstrapping is done
             if (len(self.tasks) % self.fit_rate) == 0:  # Time to fit
                 # 1 - Retrieve last <fit_rate> (task, reward) pairs
@@ -133,12 +136,13 @@ class ALPGMM():
 
                 self.gmm = self.potential_gmms[np.argmin(fitnesses)]
 
-                # book-keeping
-                self.bk['weights'].append(self.gmm.weights_.copy())
-                self.bk['covariances'].append(self.gmm.covariances_.copy())
-                self.bk['means'].append(self.gmm.means_.copy())
-                self.bk['tasks_alps'] = self.tasks_alps
-                self.bk['episodes'].append(len(self.tasks))
+                if book_keeping:
+                    # book-keeping
+                    self.bk['weights'].append(self.gmm.weights_.copy())
+                    self.bk['covariances'].append(self.gmm.covariances_.copy())
+                    self.bk['means'].append(self.gmm.means_.copy())
+                    self.bk['tasks_alps'] = self.tasks_alps
+                    self.bk['episodes'].append(len(self.tasks))
 
     def sample_task(self, force_uniform: bool = False):
         if force_uniform or (len(self.tasks) < self.nb_random) or (np.random.random() < self.random_task_ratio):
