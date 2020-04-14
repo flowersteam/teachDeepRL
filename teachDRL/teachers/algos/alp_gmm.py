@@ -106,9 +106,9 @@ class ALPGMM():
 
         self.fit()
 
-    def fit(self, book_keeping=False):
+    def fit(self, book_keeping=False, force_fit=False):
         if len(self.tasks) >= self.nb_random:  # If initial bootstrapping is done
-            if (len(self.tasks) % self.fit_rate) == 0:  # Time to fit
+            if force_fit or (len(self.tasks) % self.fit_rate) == 0:  # Time to fit
                 # 1 - Retrieve last <fit_rate> (task, reward) pairs
                 cur_tasks_alps = np.array(self.tasks_alps[-self.fit_rate:])
 
