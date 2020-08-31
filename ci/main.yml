@@ -69,7 +69,8 @@ stages:
               python setup.py bdist_wheel
             displayName: 'Generate Wheels'
           - script: |
-              python -m twine upload -r ray-feed --config-file $(PYPIRC_PATH) dist/*.whl
+              FEED_URL="https://bizair.pkgs.visualstudio.com/ccf3fa37-3b57-498c-8b43-231e00d92672/_packaging/ray-feed/pypi/upload"
+              python -m twine upload -r ray-feed --config-file $(PYPIRC_PATH) --repository-url "$FEED_URL" dist/*.whl
             displayName: 'Upload to ray-feed'
 trigger:
   branches:
