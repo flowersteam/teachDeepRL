@@ -10,7 +10,7 @@ setup(
     name='teachDRL',
     
     packages=find_packages(),
-    version="0.1",
+    version="0.1.0.dev0",
     install_requires=[
         # 'cloudpickle==1.2.0',
         'gym[atari,box2d,classic_control]>=0.10.8',
