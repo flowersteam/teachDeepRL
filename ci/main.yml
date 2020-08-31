@@ -5,8 +5,8 @@ name: $(BuildDefinitionName)_$(SourceBranchName)_$(BuildID)
 stages:
   - stage: Build
     jobs:
-      - job: RayTests
-        timeoutInMinutes: 240
+      - job: TeachDeepRLwheels
+        timeoutInMinutes: 60
         cancelTimeoutInMinutes: 5
         strategy:
           matrix:
@@ -26,6 +26,8 @@ stages:
             displayName: 'Use Python $(python.version)'
           - script: |
               python -m pip install --upgrade pip
+              python -m pip install --upgrade setuptools
+              python -m pip install --upgrade wheel
             displayName: 'Install dependencies'
           - task: TwineAuthenticate@1
             displayName: 'Twine Authenticate'
