@@ -69,7 +69,7 @@ stages:
               python setup.py bdist_wheel
             displayName: 'Generate Wheels'
           - script: |
-              python -m twine upload -r myTestFeed --config-file $(PYPIRC_PATH) dist/*.whl
+              python -m twine upload -r ray-feed --config-file $(PYPIRC_PATH) dist/*.whl
             displayName: 'Upload to ray-feed'
 trigger:
   branches:
