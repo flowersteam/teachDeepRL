@@ -69,8 +69,19 @@ stages:
               python setup.py bdist_wheel
             displayName: 'Generate Wheels'
           - script: |
-              FEED_URL="https://bizair.pkgs.visualstudio.com/ccf3fa37-3b57-498c-8b43-231e00d92672/_packaging/ray-feed/pypi/upload"
-              python -m twine upload -r ray-feed --config-file $(PYPIRC_PATH) --repository-url "$FEED_URL" dist/*.whl
+              # Cause the script to exit if a single command fails.
+              set -e
+
+              # Show explicitly which commands are currently running.
+              set -x
+
+              sed -i -e 's+repository=.*+repository=https://bizair.pkgs.visualstudio.com/ccf3fa37-3b57-498c-8b43-231e00d92672/_packaging/ray-feed/pypi/upload+g' $PYPIRC_PATH
+              UPLOAD_OUTPUT=$(python -m twine upload -r "ray-feed" --config-file $(PYPIRC_PATH) $BUILD_SOURCESDIRECTORY/dist/*.whl)
+              echo $UPLOAD_OUTPUT
+              if [[ $UPLOAD_OUTPUT == *"HTTPError"* ]]; then
+                echo "Error detected after upload."
+                exit 1
+              fi
             displayName: 'Upload to ray-feed'
 trigger:
   branches:
