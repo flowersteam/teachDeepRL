@@ -16,7 +16,7 @@ stages:
             mac_python36:
               imageName: 'macOS-10.15'
               python.version: '3.6'
-        displayName: Ray Tests
+        displayName: TeachDeepRL Wheels
         pool:
           vmImage: $(imageName)
         steps:
@@ -28,6 +28,7 @@ stages:
               python -m pip install --upgrade pip
               python -m pip install --upgrade setuptools
               python -m pip install --upgrade wheel
+              python -m pip install --upgrade twine
             displayName: 'Install dependencies'
           - task: TwineAuthenticate@1
             displayName: 'Twine Authenticate'
