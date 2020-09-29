@@ -13,6 +13,15 @@ stages:
             linux_python36:
               imageName: 'ubuntu-16.04'
               python.version: '3.6'
+              WHEELS_PATH: '/dist/*.whl'
+            macos1015_python36:
+              imageName: 'macOS-10.15'
+              python.version: '3.6'
+              WHEELS_PATH: '/dist/*.whl'
+            # win2019_python36:
+            #   imageName: 'windows-2019'
+            #   python.version: '3.6'
+            #   WHEELS_PATH: '\dist\*.whl'
         displayName: TeachDeepRL Wheels
         pool:
           vmImage: $(imageName)
@@ -21,7 +30,7 @@ stages:
             inputs:
               versionSpec: '$(python.version)'
             displayName: 'Use Python $(python.version)'
-          - script: |
+          - bash: |
               python -m pip install --upgrade pip
               python -m pip install --upgrade setuptools
               python -m pip install --upgrade wheel
@@ -62,18 +71,23 @@ stages:
               echo $PYPIRC_PATH
               cat $PYPIRC_PATH
             displayName: 'Change version'
-          - script: |
+          - bash: |
               python setup.py bdist_wheel
             displayName: 'Generate Wheels'
-          - script: |
+          - bash: |
               # Cause the script to exit if a single command fails.
               set -e
 
               # Show explicitly which commands are currently running.
               set -x
 
-              sed -i -e 's+repository=.*+repository=https://bizair.pkgs.visualstudio.com/ccf3fa37-3b57-498c-8b43-231e00d92672/_packaging/ray-feed/pypi/upload+g' $PYPIRC_PATH
-              UPLOAD_OUTPUT=$(python -m twine upload -r "ray-feed" --config-file $(PYPIRC_PATH) $BUILD_SOURCESDIRECTORY/dist/*.whl)
+              if [[ $AGENT_OS == "Darwin" ]] || [[ $AGENT_OS == "Linux" ]]; then
+                sed -i -e 's+repository=.*+repository=https://bizair.pkgs.visualstudio.com/ccf3fa37-3b57-498c-8b43-231e00d92672/_packaging/ray-feed/pypi/upload+g' $PYPIRC_PATH
+              else
+                sed -i -e "s\repository=.*\repository=https://bizair.pkgs.visualstudio.com/ccf3fa37-3b57-498c-8b43-231e00d92672/_packaging/ray-feed/pypi/upload\g" $PYPIRC_PATH
+              fi
+              cat $PYPIRC_PATH
+              UPLOAD_OUTPUT=$(python -m twine upload -r "ray-feed" --config-file $(PYPIRC_PATH) $BUILD_SOURCESDIRECTORY$WHEELS_PATH)
               echo $UPLOAD_OUTPUT
               if [[ $UPLOAD_OUTPUT == *"HTTPError"* ]]; then
                 echo "Error detected after upload."
