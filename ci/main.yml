@@ -18,10 +18,10 @@ stages:
               imageName: 'macOS-10.15'
               python.version: '3.6'
               WHEELS_PATH: '/dist/*.whl'
-            win2019_python36:
-              imageName: 'windows-2019'
-              python.version: '3.6'
-              WHEELS_PATH: '\dist\*.whl'
+            # win2019_python36:
+            #   imageName: 'windows-2019'
+            #   python.version: '3.6'
+            #   WHEELS_PATH: '\dist\*.whl'
         displayName: TeachDeepRL Wheels
         pool:
           vmImage: $(imageName)
