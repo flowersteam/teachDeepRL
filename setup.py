@@ -1,5 +1,6 @@
 from os.path import join, dirname, realpath
 from setuptools import setup, find_packages
+from setuptools.dist import Distribution
 import sys
 
 assert sys.version_info.major == 3 and sys.version_info.minor >= 6, \
