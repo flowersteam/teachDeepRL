@@ -6,6 +6,13 @@ assert sys.version_info.major == 3 and sys.version_info.minor >= 6, \
     "This repo is designed to work with Python 3.6 and greater." \
     + "Please install it before proceeding."
 
+
+class BinaryDistribution(Distribution):
+    """Distribution which always forces a binary package with platform name"""
+    def has_ext_modules(foo):
+        return True
+
+
 setup(
     name='teachDRL',
     
@@ -33,4 +40,5 @@ setup(
     ],
     description="Teacher algorithms for curriculum learning of Deep RL in continuously parameterized environments",
     author="Rémy Portelas",
+    distclass=BinaryDistribution,
 )

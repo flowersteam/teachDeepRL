@@ -30,7 +30,7 @@ stages:
             inputs:
               versionSpec: '$(python.version)'
             displayName: 'Use Python $(python.version)'
-          - script: |
+          - bash: |
               python -m pip install --upgrade pip
               python -m pip install --upgrade setuptools
               python -m pip install --upgrade wheel
@@ -71,10 +71,10 @@ stages:
               echo $PYPIRC_PATH
               cat $PYPIRC_PATH
             displayName: 'Change version'
-          - script: |
+          - bash: |
               python setup.py bdist_wheel
             displayName: 'Generate Wheels'
-          - script: |
+          - bash: |
               # Cause the script to exit if a single command fails.
               set -e
 
