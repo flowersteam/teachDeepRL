@@ -13,6 +13,15 @@ stages:
             linux_python36:
               imageName: 'ubuntu-16.04'
               python.version: '3.6'
+            macos1015_python36:
+              imageName: macOS-10.15'
+              python.version: '3.6'
+            macos1014_python36:
+              imageName: macOS-10.14'
+              python.version: '3.6'
+            win2019_python36:
+              imageName: 'windows-2019'
+              python.version: '3.6'
         displayName: TeachDeepRL Wheels
         pool:
           vmImage: $(imageName)
