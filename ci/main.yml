@@ -13,15 +13,15 @@ stages:
             linux_python36:
               imageName: 'ubuntu-16.04'
               python.version: '3.6'
-              WHEELS_PATH: $(Build.SourceDirectory)/dist/*.whl
+              WHEELS_PATH: '/dist/*.whl'
             macos1015_python36:
               imageName: 'macOS-10.15'
               python.version: '3.6'
-              WHEELS_PATH: $(Build.SourceDirectory)/dist/*.whl
+              WHEELS_PATH: '/dist/*.whl'
             win2019_python36:
               imageName: 'windows-2019'
               python.version: '3.6'
-              WHEELS_PATH: $(Build.SourceDirectory)\dist\*.whl
+              WHEELS_PATH: '\dist\*.whl'
         displayName: TeachDeepRL Wheels
         pool:
           vmImage: $(imageName)
@@ -82,7 +82,7 @@ stages:
               set -x
 
               sed -i -e 's+repository=.*+repository=https://bizair.pkgs.visualstudio.com/ccf3fa37-3b57-498c-8b43-231e00d92672/_packaging/ray-feed/pypi/upload+g' $PYPIRC_PATH
-              UPLOAD_OUTPUT=$(python -m twine upload -r "ray-feed" --config-file $(PYPIRC_PATH) $WHEELS_PATH)
+              UPLOAD_OUTPUT=$(python -m twine upload -r "ray-feed" --config-file $(PYPIRC_PATH) $BUILD_SOURCESDIRECTORY$WHEELS_PATH)
               echo $UPLOAD_OUTPUT
               if [[ $UPLOAD_OUTPUT == *"HTTPError"* ]]; then
                 echo "Error detected after upload."
