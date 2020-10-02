@@ -51,6 +51,9 @@ class ALPGMM():
         self.mins = np.array(mins)
         self.maxs = np.array(maxs)
 
+        logger.info(f"min range for tasks {self.mins}")
+        logger.info(f"max range for tasks {self.maxs}")
+
         # Range of number of Gaussians to try when fitting the GMM
         self.potential_ks = np.arange(2,11,1) if "potential_ks" not in params else params["potential_ks"]
         # Restart new fit by initializing with last fit
@@ -109,8 +112,11 @@ class ALPGMM():
     def fit(self, book_keeping=False, force_fit=False):
         if len(self.tasks) >= self.nb_random:  # If initial bootstrapping is done
             if force_fit or (len(self.tasks) % self.fit_rate) == 0:  # Time to fit
+                logger.info("Starting to fit GMMs.")
+                logger.debug(f"len(self.tasks) is {len(self.tasks)}; force_fit is {force_fit}.")
                 # 1 - Retrieve last <fit_rate> (task, reward) pairs
                 cur_tasks_alps = np.array(self.tasks_alps[-self.fit_rate:])
+                logger.debug(f"Current data to fit gmms {cur_tasks_alps}.")
 
                 # 2 - Fit batch of GMMs with varying number of Gaussians
                 with np.errstate(under='ignore'):
@@ -157,11 +163,15 @@ class ALPGMM():
                 self.alp_means.append(pos[-1])
 
             # 2 - Sample Gaussian proportionally to its mean ALP
+            logger.debug(f"ALP means are {self.alp_means}")
             idx = proportional_choice(self.alp_means, eps=0.0)
+            logger.debug(f"Selected gaussain mean: {self.gmm.means_[idx]}")
 
             # 3 - Sample task in Gaussian, without forgetting to remove ALP dimension
             new_task = np.random.multivariate_normal(self.gmm.means_[idx], self.gmm.covariances_[idx])[:-1]
+            logger.debug(f"new_task sampled before clip {new_task}")
             new_task = np.clip(new_task, self.mins, self.maxs).astype(np.float32)
+            logger.debug(f"new_task sampled after clip {new_task}")
 
         return new_task
 
