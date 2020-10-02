@@ -14,10 +14,10 @@ stages:
               imageName: 'ubuntu-16.04'
               python.version: '3.6'
               WHEELS_PATH: '/dist/*.whl'
-            macos1015_python36:
-              imageName: 'macOS-10.15'
-              python.version: '3.6'
-              WHEELS_PATH: '/dist/*.whl'
+            # macos1015_python36:
+            #   imageName: 'macOS-10.15'
+            #   python.version: '3.6'
+            #   WHEELS_PATH: '/dist/*.whl'
             # win2019_python36:
             #   imageName: 'windows-2019'
             #   python.version: '3.6'
