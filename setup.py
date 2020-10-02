@@ -41,5 +41,6 @@ setup(
     ],
     description="Teacher algorithms for curriculum learning of Deep RL in continuously parameterized environments",
     author="Rémy Portelas",
-    distclass=BinaryDistribution,
+    # Uncomment this is you need platform specific wheels
+    # distclass=BinaryDistribution,
 )
