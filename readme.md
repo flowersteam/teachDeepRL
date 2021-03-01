@@ -19,14 +19,18 @@ a learning curriculum for different learners (embodiments), their robustness to 
 tasks, and their scalability to non-linear and high-dimensional parameter spaces. ALP-GMM, which is conceptually
 simple and has very few crucial hyperparameters, opens-up exciting perspectives for various curriculum learning challenges within DRL (domain randomization for Sim2Real transfer, curriculum learning within autonomously discovered task spaces, ...).
 
-Paper: https://arxiv.org/abs/1910.07224
+Paper: R. Portelas, C. Colas, K. Hofmann, and P.-Y. Oudeyer. Teacher Algorithms For Curriculum Learning of
+Deep RL in Continuously Parameterized Environments. CoRL 2019. https://arxiv.org/abs/1910.07224
 
 This github repository provides implementations for the following teacher algorithms:
 * ALP-GMM, our proposed teacher algorithm
-* Robust Intelligent Adaptive Curiosity (RIAC), from [Baranes and Oudeyer, R-IAC: robust intrinsically motivated exploration and active learning.
-](https://ieeexplore.ieee.org/document/5342516)
-* Covar-GMM, from [Moulin-Frier et al., Self-organization of early vocal development in infants and machines: The role of intrinsic motivation.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3893575/)
+* Robust Intelligent Adaptive Curiosity (RIAC), from [Baranes and Oudeyer (2009)](https://hal.inria.fr/inria-00438595/document). This is also an implementation of the SAGG-RIAC algorithm from [Baranes and Oudeyer (2013)](https://arxiv.org/abs/1301.4862), where RIAC is used to incrementally segment the goal space into sub-regions, and a bandit algorithm is used to sample tasks/goals in regions of high absolute learning progress.
+* Covar-GMM, from [Moulin-Frier et al. (2013)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3893575/)
 
+Full references:
+* A. Baranes and P.-Y. Oudeyer (2009). R-IAC: robust intrinsically motivated exploration and active learning. IEEE Trans. Autonomous Mental Development.
+* A. Baranes and P.-Y. Oudeyer (2013). Active learning of inverse models with intrinsically motivated goal exploration in robots. Robotics and Autonomous Systems.
+* C. Moulin-Frier, S. M. Nguyen, and P.-Y. Oudeyer (2013). Self-organization of early vocal development in infants and machines: The role of intrinsic motivation. Frontiers in Psychology (Cognitive Science).
 
 ## Table of Contents  
 **[Installation](#installation)**<br>
