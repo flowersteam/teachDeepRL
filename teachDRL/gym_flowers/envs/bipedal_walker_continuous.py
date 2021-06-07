@@ -143,7 +143,13 @@ class BipedalWalkerContinuous(gym.Env, EzPickle):
         self.observation_space = spaces.Box(-high, high, dtype=np.float32)
         self.torque_penalty = 0.00035
 
-        self.set_environment(stump_height=3, obstacle_spacing=6)
+        # Initialize with dummy values so first reset runs successfully for
+        # 'stump tracks' or 'hexagon tracks'. 
+        self.set_environment(
+            stump_height=3,
+            obstacle_spacing=6,
+            poly_shape=12,
+        )
 
     # Use this init to initialize the environment configurations
     # So far you can choose between using a 'short', 'default' and quadrupedal ('quadru') walker
